@@ -1,0 +1,112 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$s28BIQ1nMtnFQ0yEkAfwwJ$0Vtf93pRkarJ9bWnuv/flpGT+hf25qTt+JccNC9Xz2Y=",
+      "last_login": "2024-02-17T10:53:19.551Z",
+      "is_superuser": true,
+      "username": "",
+      "first_name": "Admin",
+      "last_name": "Admin",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-02-17T10:52:57.103Z",
+      "email": "admin@gmail.com",
+      "full_name": null,
+      "avatar": "",
+      "city": null,
+      "phone": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.payments",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "date_payments": "2024-02-17",
+      "paid_lesson": 1,
+      "paid_course": null,
+      "paid_sum": 1000.0,
+      "paid_method": "наличныe"
+    }
+  },
+  {
+    "model": "users.payments",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "date_payments": "2024-02-18",
+      "paid_lesson": 2,
+      "paid_course": null,
+      "paid_sum": 1000.0,
+      "paid_method": "наличныe"
+    }
+  },
+  {
+    "model": "users.payments",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "date_payments": "2024-02-19",
+      "paid_lesson": null,
+      "paid_course": 1,
+      "paid_sum": 12000.0,
+      "paid_method": "наличныe"
+    }
+  },
+  {
+    "model": "users.payments",
+    "pk": 4,
+    "fields": {
+      "user": 1,
+      "date_payments": "2024-02-20",
+      "paid_lesson": null,
+      "paid_course": 2,
+      "paid_sum": 13000.0,
+      "paid_method": "перевод на счет"
+    }
+  },
+  {
+    "model": "materials.course",
+    "pk": 1,
+    "fields": {
+      "title": "Python backend",
+      "preview": "",
+      "description": "Python backend"
+    }
+  },
+  {
+    "model": "materials.course",
+    "pk": 2,
+    "fields": {
+      "title": "Python frontend",
+      "preview": "",
+      "description": "Python frontend"
+    }
+  },
+  {
+    "model": "materials.lesson",
+    "pk": 1,
+    "fields": {
+      "title": "basic back",
+      "preview": "",
+      "description": "basic",
+      "link_video": null,
+      "course": 1
+    }
+  },
+  {
+    "model": "materials.lesson",
+    "pk": 2,
+    "fields": {
+      "title": "basic front",
+      "preview": "",
+      "description": "basic front",
+      "link_video": null,
+      "course": 2
+    }
+  }
+]
