@@ -15,6 +15,8 @@ class User(AbstractUser):
     city = models.CharField(max_length=150, verbose_name='город', **NULLABLE)
     phone = models.CharField(max_length=15, verbose_name='телефон', **NULLABLE)
 
+    username = None
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
