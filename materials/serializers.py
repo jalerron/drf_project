@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from config import settings
 from materials.models import Course, Lesson, Subscription
 from materials.validators import VideoValidator
 
@@ -22,17 +23,14 @@ class CourseSerializer(serializers.ModelSerializer):
             return instance.lesson_set.all().count()
         return 0
 
-    def user_(self):
-        """Получаем текущего пользователя"""
-        request = self.context.get('request', None)
-        if request:
-            return request.user
-        return None
-
     def get_is_subscribed(self, course):
         """Проверяем, есть ли в наборе подписок курса объект
            с текущим пользователем"""
-        return course.subscription_set.filter(user=self.user_()).exists()
+        request = self.context.get('request')
+        if course.subscription_set.filter(user=request.user.id).exists():
+            return True
+        else:
+            return False
 
     class Meta:
         model = Course

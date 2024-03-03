@@ -6,7 +6,6 @@
       "password": "pbkdf2_sha256$720000$s28BIQ1nMtnFQ0yEkAfwwJ$0Vtf93pRkarJ9bWnuv/flpGT+hf25qTt+JccNC9Xz2Y=",
       "last_login": "2024-02-17T10:53:19.551Z",
       "is_superuser": true,
-      "username": "",
       "first_name": "Admin",
       "last_name": "Admin",
       "is_staff": true,

@@ -87,6 +87,7 @@ class SubscribeAPIView(APIView):
        в запросе передаем id курса и если подписка на данный курс у текущего пользователя
        существует - удаляем, если нет - создаем"""
     serializer_class = SubscriptionSerializer
+    permission_classes = [IsAuthenticated]
 
     @staticmethod
     def post(request, pk):
@@ -99,6 +100,6 @@ class SubscribeAPIView(APIView):
             subs_item.delete()
             message = 'Подписка удалена'
         else:
-            Subscription.objects.create(user=user, course=course)
+            Subscription.objects.create(course=course, user=user)
             message = 'Подписка добавлена'
         return Response({"message": message})
