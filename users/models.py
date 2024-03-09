@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
@@ -36,11 +38,14 @@ class Payments(models.Model):
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='пользователь')
-    date_payments = models.DateField(default=timezone.now, verbose_name='дата платежа')
+    date_payments = models.DateField(auto_now_add=True, verbose_name='дата платежа')
     paid_lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='оплаченный урок', **NULLABLE)
     paid_course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='оплаченный урок', **NULLABLE)
-    paid_sum = models.FloatField(verbose_name='сумма оплаты', **NULLABLE)
+    paid_sum = models.IntegerField(verbose_name='сумма оплаты', **NULLABLE)
     paid_method = models.CharField(choices=PAYMENT_METHOD_CHOISE, verbose_name='метод оплаты', **NULLABLE)
+
+    payment_link = models.URLField(max_length=400, **NULLABLE, verbose_name='ссылка на оплату')
+    payment_id = models.CharField(max_length=100, **NULLABLE, verbose_name='идентификатор платежа')
 
     def __str__(self):
         return f'{self.user} - {self.date_payments} - {self.paid_lesson if self.paid_lesson else self.paid_course} - {self.paid_method}'

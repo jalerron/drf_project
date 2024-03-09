@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',
+    'drf_yasg',
 
     'users',
     'materials',
@@ -140,3 +141,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ]
 }
+
+
+# Strip params for STRIP API
+# https://docs.stripe.com/api
+STRIP_URL = 'https://api.stripe.com'
+STRIP_SECRET_KEY = os.getenv('STRIP_SECRET_KEY')
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
