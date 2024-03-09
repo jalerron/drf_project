@@ -1,11 +1,12 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
-from rest_framework import generics, status
+from rest_framework import generics, status, serializers
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
 from users.models import Payments, User
-from users.serializers import PaymentsListAPISerializer, UserSerializer
+from users.serializers import UserSerializer, PaymentsAPISerializer
+from users.services import create_price, create_stripe_session, retrieve_stripe_session
 
 
 class UserCreateAPIView(generics.CreateAPIView):
@@ -52,9 +53,30 @@ class UserDeleteAPIView(generics.DestroyAPIView):
 
 
 class PaymentsListAPIView(generics.ListAPIView):
-    serializer_class = PaymentsListAPISerializer
+    serializer_class = PaymentsAPISerializer
     queryset = Payments.objects.all()
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ('paid_lesson', 'paid_course', 'paid_method')
     ordering_fields = ['date_payments']
+
+
+class PaymentsCreateAPIView(generics.CreateAPIView):
+    serializer_class = PaymentsAPISerializer
+    queryset = Payments.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        course = serializer.validated_data.get('paid_course')
+        if not course:
+            raise serializers.ValidationError('Укажите курс')
+        payment = serializer.save()
+        stripe_price_id = create_price(payment)
+        payment.payment_link, payment.payment_id = create_stripe_session(stripe_price_id)
+        payment.save()
+
+
+class PaymentRetrieveAPIView(generics.RetrieveAPIView):
+    serializer_class = PaymentsAPISerializer
+    queryset = Payments.objects.all()
+    permission_classes = [IsAuthenticated]
