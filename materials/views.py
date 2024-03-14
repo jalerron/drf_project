@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils import timezone
 from rest_framework import viewsets, generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -9,6 +10,7 @@ from materials.models import Course, Lesson, Subscription
 from materials.pagination import MaterialsPagination
 from materials.permissions import IsModerator, IsOwner
 from materials.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
+from materials.tasks import notifications_update_course
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -31,6 +33,12 @@ class CourseViewSet(viewsets.ModelViewSet):
         new_course = serializer.save()
         new_course.owner = self.request.user
         new_course.save()
+
+    def perform_update(self, serializer):
+        """ Обнолвение курса """
+        course = serializer.save()
+        notifications_update_course.delay(course.id)
+        course.update = timezone.now()
 
     def get_queryset(self):
         """закрыл объекты по пирммишену"""

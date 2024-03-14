@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from users.models import Payments, User
 from users.serializers import UserSerializer, PaymentsAPISerializer
-from users.services import create_price, create_stripe_session, retrieve_stripe_session
+from users.services import create_price, create_stripe_session
 
 
 class UserCreateAPIView(generics.CreateAPIView):
