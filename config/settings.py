@@ -86,11 +86,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'drf_project',
+        'NAME': 'postgres',
         'USER': os.getenv('DB_USER'),
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'PASSWORD': os.getenv('DB_PASSWORD')
+        'HOST': 'db',
+        'PASSWORD': 'mysecretpassword'
     }
 }
 
