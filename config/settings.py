@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': os.getenv('DB_USER'),
         'HOST': 'db',
-        'PASSWORD': 'mysecretpassword'
+        'PASSWORD': os.getenv('DB_PASSWORD')
     }
 }
 
